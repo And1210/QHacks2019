@@ -40,7 +40,7 @@
 										</header>
 										<p>Our web application aims to improve lives by making the roads safer via <b>Machine Learning, Artificial Intelligence, Image Recognition, Computational Skills, Database Management and Graphing algortithms.</b></p>
 									</div>
-									<span class="image"><img src="website/images/pic01.jpg" alt="" /></span>
+									<span class="image"><img src="website/images/logo.png"/></span>
 								</div>
 							</section>
 						<!-- First Section -->
@@ -97,11 +97,11 @@
 									//   }
 									  map.on('load', function () {
 
-window.setInterval(function() {
-	map.getSource('intersections').setData('http://192.168.137.1');
-}, 1000);
+									window.setInterval(function() {
+										map.getSource('intersections').setData('http://192.168.137.1');
+									}, 1000);
 
-map.addSource('intersections', {type: 'geojson', data: 'http://192.168.137.1'})
+									map.addSource('intersections', {type: 'geojson', data: 'http://192.168.137.1'})
 
 									//   var feature = features[0];
 									//   var popup = new mapboxgl.Popup({ offset: [0, 0] })
@@ -136,8 +136,8 @@ map.addSource('intersections', {type: 'geojson', data: 'http://192.168.137.1'})
 													'circle-color': [
 														'match',
 														['get', 'description'],
-														'0', '#000000',
-														'1', '#ff0000',
+														'0', '#ff0000',
+														'1', '#0000ff',
 														'2', '#00ff00',
 														/* other */ '#ccc'
 													]
