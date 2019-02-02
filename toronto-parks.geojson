@@ -1,0 +1,47 @@
+﻿{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "City Hall",
+        "description": "0"
+      },
+      "geometry": {
+        "coordinates": [
+          -79.384293,
+          43.653908
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Island",
+        "description": "1"
+      },
+      "geometry": {
+        "coordinates": [
+          -79.368683,
+		  43.623409
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Public Library",
+        "description": "2"
+      },
+      "geometry": {
+        "coordinates": [
+          -79.400414,
+          43.639217
+        ],
+        "type": "Point"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}
