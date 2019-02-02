@@ -4,7 +4,7 @@
       "type": "Feature",
       "properties": {
         "title": "City Hall",
-		"marker-symbol": "blob"
+		"marker-symbol": "dot"
         "marker-color": "#ff0000"
       },
       "geometry": {
@@ -35,7 +35,7 @@
       "properties": {
         "title": "Public Library",
         "marker-color": "#0000ff"
-		"marker-symbol": "point"
+		"marker-symbol": "dot"
       },
       "geometry": {
         "coordinates": [
