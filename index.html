@@ -4,22 +4,20 @@
 		<title>TraffiqHack 2019</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="website/assets/css/main.css" />
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+		<link rel="stylesheet" href="website/assets/css/main.css" />
 	</head>
 	<body class="is-preload">
-
 		<!-- Wrapper -->
 			<div id="wrapper">
-
 				<!-- Header -->
 					<header id="header" class="alt">
 						<span class="logo"><img src="website/images/logo.svg" alt="" /></span>
 						<h1 style="font-size: 200px" >TraffIQ </h1>
 						<p>Web Application that takes fkn data from cameras and uses ML for road safety</p>
 					</header>
-
 				<!-- Nav -->
 					<nav id="nav">
 						<ul>
@@ -29,10 +27,8 @@
 							<li><a href="#cta">Contact Us</a></li>
 						</ul>
 					</nav>
-
 				<!-- Main -->
 					<div id="main">
-
 						<!-- Introduction -->
 							<section id="intro" class="main">
 								<div class="spotlight">
@@ -45,7 +41,6 @@
 									<span class="image"><img src="website/images/pic01.jpg" alt="" /></span>
 								</div>
 							</section>
-
 						<!-- First Section -->
 							<section id="first" class="main special">
 								<header class="major">
@@ -70,8 +65,12 @@
 								</ul>
 								<footer class="major">
 								</footer>
-								<p>Hello
-									<div id='map'></div>
+								</section>
+								<section>
+										<style>
+												#map { display: float; height:600px; width:100%; }
+												</style>
+								<div id='map'></div>
 									<script>
 									mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
 									const map = new mapboxgl.Map({
@@ -84,20 +83,16 @@
 									  var features = map.queryRenderedFeatures(e.point, {
 										layers: ['toronto'] // replace this with the name of the layer
 									  });
-									
 									  if (!features.length) {
 										return;
 									  }
-									
 									  var feature = features[0];
-									
 									  var popup = new mapboxgl.Popup({ offset: [0, -15] })
 										.setLngLat(feature.geometry.coordinates)
 										.setHTML('<h3>' + feature.properties.title + '</h3><p>' + feature.properties.description + '</p>')
 										.setLngLat(feature.geometry.coordinates)
 										.addTo(map);
-									});
-									
+									});									
 									map.on('load', function() {
 										// Insert the layer beneath any symbol layer.
 										var layers = map.getStyle().layers;
@@ -136,7 +131,7 @@
 											}
 										}, labelLayerId);
 									});
-									</script></p>
+									</script>
 							</section>
 
 						<!-- Second Section -->
