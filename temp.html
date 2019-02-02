@@ -25,14 +25,16 @@ var map = new mapboxgl.Map({
 
 map.on('load', function () {
 
+	window.setInterval(function() {
+		map.getSource('intersections').setData('http://localhost');
+	}, 1000);
+	
+	map.addSource('intersections', {type: 'geojson', data: 'http://localhost'})
+	
     map.addLayer({
-        'id': 'population',
+        'id': 'intersections',
         'type': 'circle',
-        'source': {
-            type: 'vector',
-            url: './toronto-parks.geojson'
-        },
-        'source-layer': 'sf2010',
+        'source': 'intersections',
         'paint': {
             // make circles larger as the user zooms from z12 to z22
             'circle-radius': {
