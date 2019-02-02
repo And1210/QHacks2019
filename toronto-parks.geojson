@@ -4,7 +4,6 @@
       "type": "Feature",
       "properties": {
         "title": "City Hall",
-		"marker-symbol": "dot"
         "marker-color": "#ff0000"
       },
       "geometry": {
@@ -20,7 +19,6 @@
       "properties": {
         "title": "Island",
         "marker-color": "#00ff00"
-		 "marker-symbol": "dot"
       },
       "geometry": {
         "coordinates": [
@@ -35,7 +33,6 @@
       "properties": {
         "title": "Public Library",
         "marker-color": "#0000ff"
-		"marker-symbol": "dot"
       },
       "geometry": {
         "coordinates": [
