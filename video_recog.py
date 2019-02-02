@@ -57,15 +57,16 @@ with tf.Session() as sess:
         cv2.imshow('TensorFlow MobileNet-SSD', img)
             
         
+        personCount = 0
+        bikeCount = 0
+        carCount = 0
+        motorcycleCount = 0
+        busCount = 0
+        truckCount = 0
+        trafficCount = 0
         
-        objCount = out[0]
-        objCount = objCount[0]
-        objList = out[3]
-        objList = objList[0]
-        tempstr = ''.join(objList)
-        tempstr.replace(".", ",")
-        objList = tempstr.split(",")
-        print(objList)
+        objCount = int(out[0][0])
+        objList = out[3][0][:objCount]
         for i in range(objCount):
             if objList[i] == 1:
                 personCount = personCount + 1
@@ -80,8 +81,6 @@ with tf.Session() as sess:
             elif objList[i] == 8:
                 truckCount = truckCount + 1
             trafficCount = carCount + motorcycleCount + busCount + truckCount
-
-        print(trafficCount)
         
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
