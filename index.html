@@ -95,10 +95,10 @@
 									  map.on('load', function () {
 
 window.setInterval(function() {
-	map.getSource('intersections').setData('https://raw.githubusercontent.com/And1210/QHacks2019/master/toronto-parks.geojson');
+	map.getSource('intersections').setData('http://localhost');
 }, 1000);
 
-map.addSource('intersections', {type: 'geojson', data: 'https://raw.githubusercontent.com/And1210/QHacks2019/master/toronto-parks.geojson'})
+map.addSource('intersections', {type: 'geojson', data: 'http://localhost'})
 
 									//   var feature = features[0];
 									//   var popup = new mapboxgl.Popup({ offset: [0, 0] })
@@ -125,7 +125,7 @@ map.addSource('intersections', {type: 'geojson', data: 'https://raw.githubuserco
 												'paint': {
 													// make circles larger as the user zooms from z12 to z22
 													'circle-radius': {
-														'base': 1.75,
+														'base': 1.5,
 														'stops': [[12, 2], [22, 180]]
 													},
 													// color circles by ethnicity, using a match expression
@@ -140,32 +140,43 @@ map.addSource('intersections', {type: 'geojson', data: 'https://raw.githubuserco
 													]
 												}
 											});
+// Insert the layer beneath any symbol layer.
+										var layers = map.getStyle().layers;
+										
+										var labelLayerId;
+										for (var i = 0; i < layers.length; i++) {
+										if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+										labelLayerId = layers[i].id;
+										break;
+										}
+										}
+										
 										map.addLayer({
-											'id': '3d-buildings',
-											'source': 'composite',
-											'source-layer': 'building',
-											'filter': ['==', 'extrude', 'true'],
-											'type': 'fill-extrusion',
-											'minzoom': 15,
-											'paint': {
-												'fill-extrusion-color': '#aaa',
-									
-												// use an 'interpolate' expression to add a smooth transition effect to the
-												// buildings as the user zooms in
-												'fill-extrusion-height': [
-													"interpolate", ["linear"], ["zoom"],
-													15, 0,
-													15.05, ["get", "height"]
-												],
-												'fill-extrusion-base': [
-													"interpolate", ["linear"], ["zoom"],
-													15, 0,
-													15.05, ["get", "min_height"]
-												],
-												'fill-extrusion-opacity': .6
-											}
+										'id': '3d-buildings',
+										'source': 'composite',
+										'source-layer': 'building',
+										'filter': ['==', 'extrude', 'true'],
+										'type': 'fill-extrusion',
+										'minzoom': 15,
+										'paint': {
+										'fill-extrusion-color': '#aaa',
+										
+										// use an 'interpolate' expression to add a smooth transition effect to the
+										// buildings as the user zooms in
+										'fill-extrusion-height': [
+										"interpolate", ["linear"], ["zoom"],
+										15, 0,
+										15.05, ["get", "height"]
+										],
+										'fill-extrusion-base': [
+										"interpolate", ["linear"], ["zoom"],
+										15, 0,
+										15.05, ["get", "min_height"]
+										],
+										'fill-extrusion-opacity': .6
+										}
 										}, labelLayerId);
-									});
+										});
 									</script>
 							</section>
 
