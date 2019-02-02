@@ -7,12 +7,18 @@ QHacks 2019 project, simulating traffic with nodes to train AI
 import distance_matrix
 import googlemaps
 import math
+from openpyxl import workbook, load_workbook
 # _____________________________________ Google API ______________________________
 
 client = googlemaps.Client(key='AIzaSyCgY2Z9_bBdriMaGe_2hPLBjUEZacnEHfQ')
 
 # Time between points
 # (((dist.get('rows'))[0].get('elements'))[0].get('duration')).get('value')
+
+# _____________________________________ XLS _____________________________________
+
+wb2 = load_workbook('nodes.xlsx')
+
 
 # _____________________________________ Classes _________________________________
 
@@ -119,12 +125,34 @@ class Node():
         self.direction = not self.direction
 
 
-newGraph = Graph()
-print(newGraph.addVertex("43.749271, -79.403091"))
-print(newGraph.addVertex("43.750902, -79.373081"))
-print(newGraph.addVertex("43.777791, -79.415234"))
-print(newGraph.addNeighbour("43.749271, -79.403091","43.750902, -79.373081"))
-print(newGraph.addNeighbour("43.749271, -79.403091","43.777791, -79.415234"))
-print((newGraph.findNode("43.749271, -79.403091")).getNeighbours())
-print((newGraph.findNode("43.750902, -79.373081")).getNeighbours())
-print((newGraph.findNode("43.777791, -79.415234")).getNeighbours())
+toronto = Graph()
+
+
+letters = "ABCD"
+for i in range(0,4):
+    for n in range(1,5):
+        print(i,n)
+        print("{}{}".format(str(letters[i]),n), wb2["Sheet1"]["{}{}".format(str(letters[i]), n)].value)
+        toronto.addVertex(wb2["Sheet1"]["{}{}".format(str(letters[i]),n)].value)
+
+for i in range (0,4):
+    for n in range(1,5):
+        if i > 1:
+            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                 wb2["Sheet1"]["{}{}".format(letters[i - 1], n)].value)
+        if i < 4:
+            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                 wb2["Sheet1"]["{}{}".format(letters[i + 1], n)].value)
+        if n > 1:
+            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                 wb2["Sheet1"]["{}{}".format(letters[i], n - 1)].value)
+        if n < 4:
+            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                 wb2["Sheet1"]["{}{}".format(letters[i], n - 1)].value)
+
+print(toronto.numVertices())
+print(toronto.getVertices())
