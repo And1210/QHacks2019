@@ -88,6 +88,7 @@
 									//   center: [-79.3832, 43.6532],
 									//   zoom: 10
 									// });
+
 									// map.on('click', function(e) {
 									//   var features = map.queryRenderedFeatures(e.point, {
 									// 	layers: ['toronto'] // replace this with the name of the layer
@@ -136,14 +137,16 @@
 													'circle-color': [
 														'match',
 														['get', 'description'],
-														'0', '#ff0000',
+														'0', '#00ff00',
 														'1', '#0000ff',
-														'2', '#00ff00',
+														'2', '#ff0000',
+														'3', '#000000',
 														/* other */ '#ccc'
 													]
 												}
 											});
 // Insert the layer beneath any symbol layer.
+
 										var layers = map.getStyle().layers;
 										
 										var labelLayerId;
@@ -179,6 +182,27 @@
 										'fill-extrusion-opacity': .6
 										}
 										}, labelLayerId);
+
+										window.setInterval(function() {
+										map.getSource('cars').setData('http://192.168.137.1');
+									}, 1000);
+
+									map.addSource('cars', {type: 'geojson', data: 'http://192.168.137.1'})
+									map.addLayer({
+												'id': 'cars',
+												'type': 'line',
+												'source': 'cars',
+												'paint': {
+													// make circles larger as the user zooms from z12 to z22
+													// 'circle-radius': {
+													// 	'base': 1.5,
+													// 	'stops': [[12, 2], [22, 180]]
+													// },
+													// color circles by ethnicity, using a match expression
+													// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+													'line-color': '#FFFF00'
+												}
+											});
 										});
 									</script>
 							</section>

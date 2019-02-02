@@ -4,7 +4,6 @@ from traffic_controller import TrafficController
 import mapbox_helper as mb
 from flask import Flask
 from flask_cors import CORS
-import random
 
 #Setting up video recognizer
 video = "rushhour.mp4"
@@ -29,20 +28,23 @@ def getFeature(title, state, lon, lat):
 
 #Returns 
 def getFeatures():
+    d0 = 0.0003
+    d1 = 0.0002
+    
     out = '{"features":['
     for i in range(len(longitudes)):
         lon = longitudes[i]
         lat = latitudes[i]
         title = 'Feature' + str(i)
         states = controllers[i].getLights()
-        out = out + getFeature(title, 0, lon, lat) + ', '
-        out = out + getFeature(title + chr(65), states[0], lon, lat+0.0005) + ', '
-        out = out + getFeature(title + chr(66), states[1], lon+0.0005, lat) + ', '
-        out = out + getFeature(title + chr(67), states[2], lon, lat-0.0005) + ', '
+        out = out + getFeature(title + chr(65), states[0], lon+d1, lat) + ', '
+        out = out + getFeature(title + chr(66), states[1], lon, lat+d0) + ', '
+        out = out + getFeature(title + chr(67), states[2], lon-d1, lat) + ', '
+        out = out + getFeature(title + chr(68), states[3], lon, lat-d0) + ', '
         if (i < len(longitudes) - 1):
-            out = out + getFeature(title + chr(68), states[3], lon-0.0005, lat) + ', '
+            out = out + getFeature(title, 3, lon, lat) + ', '
         else:
-            out = out + getFeature(title + chr(68), states[3], lon-0.0005, lat)
+            out = out + getFeature(title, 3, lon, lat)
     out = out + '], "type": "FeatureCollection"}'
     return out
 
