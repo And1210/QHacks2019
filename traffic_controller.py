@@ -93,15 +93,33 @@ class TrafficController:
         if (waitVehicleCount > self.carThresh):
             if (time.time() - self.lastTrigger > self.timeThresh/2):
                 print("Excess limit of cars")
+                if humanbool == 1:
+                    time.sleep(7)
                 self.lastTrigger = time.time()
                 for l in self.lights:
                     l.trigger()
-        #Logic 0: if there is at least one human waiting, change lights after a time threshold
+        #Logic 2: if there is at least one human waiting, change lights after a time threshold
         if (waitHumanCount > 0):
             if (time.time() - self.lastTrigger > self.timeThresh):
                 print("Human waiting")
                 self.lastTrigger = time.time()
                 for l in self.lights:
                     l.trigger()
-            
+
+    def humanCheck(self, out):
+        humanbool = 0
+        objCount = int(out[0][0])
+        objList = out[3][0][:objCount]
+        for i in range(objCount):
+            if objList[i] == 1:
+                left = bbox[0]
+                right = bbox[2]
+                if right < 0.77:
+                    print("Human crossing, change after timer")
+                    humanbool = 1
+                    return humanbool
+                elif left > 0.12:
+                    print("Human crossing, change after timer")
+                    humanbool = 1
+                    return humanbool
             
