@@ -12,7 +12,7 @@ graph = "frozen_inference_graph.pb"
 videoGrab = VideoRecognize(video, graph)
 
 #Setting up traffic controller
-controller = [TrafficController([2*i%2, 2*((i+1)%2), 2*i%2, 2*((i+1)%2)]) for i in range(16)]
+controllers = [TrafficController([2*(i%2), 2*((i+1)%2), 2*(i%2), 2*((i+1)%2)]) for i in range(16)]
 
 #Setting up count arrays
 vehicleCounts = np.zeros(4)
@@ -34,16 +34,21 @@ def getFeatures():
         lon = longitudes[i]
         lat = latitudes[i]
         title = 'Feature' + str(i)
-        state = int(controller[i].getLights()[0]/2)
+        states = controllers[i].getLights()
+        out = out + getFeature(title, 0, lon, lat) + ', '
+        out = out + getFeature(title + chr(65), states[0], lon, lat+0.0005) + ', '
+        out = out + getFeature(title + chr(66), states[1], lon+0.0005, lat) + ', '
+        out = out + getFeature(title + chr(67), states[2], lon, lat-0.0005) + ', '
         if (i < len(longitudes) - 1):
-            out = out + getFeature(title, state, lon, lat) + ', '
+            out = out + getFeature(title + chr(68), states[3], lon-0.0005, lat) + ', '
         else:
-            out = out + getFeature(title, state, lon, lat)
+            out = out + getFeature(title + chr(68), states[3], lon-0.0005, lat)
     out = out + '], "type": "FeatureCollection"}'
     return out
 
 print(getFeatures())
 
+#Start server
 app = Flask(__name__)
 CORS(app)
 
