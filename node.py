@@ -57,17 +57,18 @@ class Graph():
         objB = self.findNode(strB)
         # error check to make sure the data can be accessed
         if strA in self.vertices and strB in self.vertices:
-            dist = distance_matrix.distance_matrix(client, (objA.x, objA.y), (objB.x, objB.y), mode="driving")
+            dist = distance_matrix.distance_matrix(client, (objA.y, objA.x), (objB.y, objB.x), mode="driving")
             distance = (((dist.get('rows'))[0].get('elements'))[0].get('distance')).get('value')
             # direction is fine
-            dir = math.atan2(objA.x-objB.x,objA.y-objB.y)
+            dir = math.atan2(objA.y-objB.y, objA.x-objB.x)
             if (math.pi/4 > abs(dir)): dir = 1
             elif (3*math.pi/4 < abs(dir)): dir = 3
             elif dir > 0: dir = 0
-            else: dir = 2
+            else:
+                dir = 2
             # this portion adds the neighbours to each other, since it is unidirectional
+            print("linking:", strA+',', strB)
             self.vertices[strA].addNeighbour(objB,(dir+2)%4, distance)
-            self.vertices[strB].addNeighbour(objA,dir,distance)
             # return if successful
             return True
         return False
@@ -88,18 +89,19 @@ class Node():
         self.direction = True
         # how many troops they have
         # the position to display on the screen
-        self.x, self.y = [float(i) for i in name.strip().split(',')]
+        self.y, self.x = [float(i) for i in name.strip().split(',')]
         # when the data is reset
-        self.neighbours = {}
-        self.cars = {}
+        self.neighbours = [None,None,None,None]
+        self.cars = [0 for i in range(4)]
         self.num = 0
 
     def addNeighbour(self, obj, dir, distance):
         # adds a new neigbour to the vertex with a given distance
-        if dir not in self.neighbours:
+        if self.neighbours[dir] == None:
             self.neighbours[dir] = [obj, distance]
-            self.cars[dir] = 0
+            obj.neighbours[(dir + 2) % 4] = [self, distance]
             self.num += 1
+            obj.num += 1
             return True
         return False
 
@@ -116,7 +118,7 @@ class Node():
         return self.neighbours
 
     def getCoord(self):
-        return [self.x,self.y]
+        return [self.y,self.x]
 
     def getDirection(self):
         return self.direction
@@ -128,31 +130,25 @@ class Node():
 toronto = Graph()
 
 
-letters = "ABCD"
-for i in range(0,4):
-    for n in range(1,5):
-        print(i,n)
+letters = "ABCDEF"
+for i in range(0,6):
+    for n in range(1,6):
         print("{}{}".format(str(letters[i]),n), wb2["Sheet1"]["{}{}".format(str(letters[i]), n)].value)
         toronto.addVertex(wb2["Sheet1"]["{}{}".format(str(letters[i]),n)].value)
 
-for i in range (0,4):
-    for n in range(1,5):
-        if i > 1:
-            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
-            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
-                                 wb2["Sheet1"]["{}{}".format(letters[i - 1], n)].value)
-        if i < 4:
-            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+for i in range (0,6):
+    for n in range(1,6):
+        if i < 5:
             toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
                                  wb2["Sheet1"]["{}{}".format(letters[i + 1], n)].value)
-        if n > 1:
-            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
+        if n < 5:
             toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
-                                 wb2["Sheet1"]["{}{}".format(letters[i], n - 1)].value)
-        if n < 4:
-            print(wb2["Sheet1"]["{}{}".format(letters[i], n)].value)
-            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
-                                 wb2["Sheet1"]["{}{}".format(letters[i], n - 1)].value)
+                                 wb2["Sheet1"]["{}{}".format(letters[i], n + 1)].value)
 
 print(toronto.numVertices())
 print(toronto.getVertices())
+print(toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getCoord())
+for i in range(0,4):
+    print(i,)
+    if (toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getNeighbours())[i] != None:
+        print(toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getNeighbours()[i][0].getCoord())
