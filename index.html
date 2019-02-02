@@ -3,10 +3,9 @@
 	<head>
 		<title>TraffiqHack 2019</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
 		<link rel="stylesheet" href="website/assets/css/main.css" />
 	</head>
 	<body class="is-preload">
@@ -79,16 +78,16 @@
 								center: [-79.380614, 43.675044],
 								zoom: 10
 								});
-								// 	mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
-								// 	const map = new mapboxgl.Map({
-								// 	  container: 'map',
-								// 	  style: 'mapbox://styles/anantj/cjrna9biqejh32sl36fr148cx',
-								// 	  center: [-79.3832, 43.6532],
-								// 	  zoom: 10
-								// 	});
+									// mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
+									// const map = new mapboxgl.Map({
+									//   container: 'map',
+									//   style: 'mapbox://styles/anantj/cjrna9biqejh32sl36fr148cx',
+									//   center: [-79.3832, 43.6532],
+									//   zoom: 10
+									// });
 									map.on('click', function(e) {
 									  var features = map.queryRenderedFeatures(e.point, {
-										layers: ['toronto'] // replace this with the name of the layer
+										layers: ['Toronto'] // replace this with the name of the layer
 									  });
 									  if (!features.length) {
 										return;
