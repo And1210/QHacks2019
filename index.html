@@ -72,11 +72,11 @@
 								<div id='map'></div>
 								<script>
 								mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
-								const map = new mapboxgl.Map({
-								container: 'map',
-								style: 'mapbox://styles/anantj/cjrnoic292rhb2sqmq1pru163',
-								center: [-79.380614, 43.675044],
-								zoom: 10
+								var map = new mapboxgl.Map({
+									container: 'map',
+									style: 'mapbox://styles/mapbox/light-v9',
+									zoom: 10,
+									center: [-79.3832, 43.6532]
 								});
 									// mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
 									// const map = new mapboxgl.Map({
@@ -85,31 +85,61 @@
 									//   center: [-79.3832, 43.6532],
 									//   zoom: 10
 									// });
-									map.on('click', function(e) {
-									  var features = map.queryRenderedFeatures(e.point, {
-										layers: ['toronto'] // replace this with the name of the layer
-									  });
-									  if (!features.length) {
-										return;
-									  }
-									  var feature = features[0];
-									  var popup = new mapboxgl.Popup({ offset: [0, 0] })
-										.setLngLat(feature.geometry.coordinates)
-										.setHTML('<h2>' + feature.properties.title + '</h2><p>Value:' + feature.properties.description + '</p>')
-										.setLngLat(feature.geometry.coordinates)
-										.addTo(map);
-									});									
-									map.on('load', function() {
-										// Insert the layer beneath any symbol layer.
-										var layers = map.getStyle().layers;
+									// map.on('click', function(e) {
+									//   var features = map.queryRenderedFeatures(e.point, {
+									// 	layers: ['toronto'] // replace this with the name of the layer
+									//   });
+									//   if (!features.length) {
+									// 	return;
+									//   }
+									  map.on('load', function () {
+
+window.setInterval(function() {
+	map.getSource('intersections').setData('https://raw.githubusercontent.com/And1210/QHacks2019/master/toronto-parks.geojson');
+}, 1000);
+
+map.addSource('intersections', {type: 'geojson', data: 'https://raw.githubusercontent.com/And1210/QHacks2019/master/toronto-parks.geojson'})
+
+									//   var feature = features[0];
+									//   var popup = new mapboxgl.Popup({ offset: [0, 0] })
+									// 	.setLngLat(feature.geometry.coordinates)
+									// 	.setHTML('<h2>' + feature.properties.title + '</h2><p>Value:' + feature.properties.description + '</p>')
+									// 	.setLngLat(feature.geometry.coordinates)
+									// 	.addTo(map);
+									// });									
+									// map.on('load', function() {
+									// 	// Insert the layer beneath any symbol layer.
+									// 	var layers = map.getStyle().layers;
 									
-										var labelLayerId;
-										for (var i = 0; i < layers.length; i++) {
-											if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-												labelLayerId = layers[i].id;
-												break;
-											}
-										}
+									// 	var labelLayerId;
+									// 	for (var i = 0; i < layers.length; i++) {
+									// 		if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+									// 			labelLayerId = layers[i].id;
+									// 			break;
+									// 		}
+									// 	}
+										map.addLayer({
+												'id': 'intersections',
+												'type': 'circle',
+												'source': 'intersections',
+												'paint': {
+													// make circles larger as the user zooms from z12 to z22
+													'circle-radius': {
+														'base': 1.75,
+														'stops': [[12, 2], [22, 180]]
+													},
+													// color circles by ethnicity, using a match expression
+													// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+													'circle-color': [
+														'match',
+														['get', 'description'],
+														'0', '#000000',
+														'1', '#ff0000',
+														'2', '#00ff00',
+														/* other */ '#ccc'
+													]
+												}
+											});
 										map.addLayer({
 											'id': '3d-buildings',
 											'source': 'composite',
