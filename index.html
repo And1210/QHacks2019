@@ -5,7 +5,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="website/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="website/assets/css/noscript.css" /></noscript>
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
 	</head>
 	<body class="is-preload">
 
@@ -69,6 +70,73 @@
 								</ul>
 								<footer class="major">
 								</footer>
+								<p>Hello
+									<div id='map'></div>
+									<script>
+									mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
+									const map = new mapboxgl.Map({
+									  container: 'map',
+									  style: 'mapbox://styles/anantj/cjrna9biqejh32sl36fr148cx',
+									  center: [-79.3832, 43.6532],
+									  zoom: 10
+									});
+									map.on('click', function(e) {
+									  var features = map.queryRenderedFeatures(e.point, {
+										layers: ['toronto'] // replace this with the name of the layer
+									  });
+									
+									  if (!features.length) {
+										return;
+									  }
+									
+									  var feature = features[0];
+									
+									  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+										.setLngLat(feature.geometry.coordinates)
+										.setHTML('<h3>' + feature.properties.title + '</h3><p>' + feature.properties.description + '</p>')
+										.setLngLat(feature.geometry.coordinates)
+										.addTo(map);
+									});
+									
+									map.on('load', function() {
+										// Insert the layer beneath any symbol layer.
+										var layers = map.getStyle().layers;
+									
+										var labelLayerId;
+										for (var i = 0; i < layers.length; i++) {
+											if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+												labelLayerId = layers[i].id;
+												break;
+											}
+										}
+									
+										map.addLayer({
+											'id': '3d-buildings',
+											'source': 'composite',
+											'source-layer': 'building',
+											'filter': ['==', 'extrude', 'true'],
+											'type': 'fill-extrusion',
+											'minzoom': 15,
+											'paint': {
+												'fill-extrusion-color': '#aaa',
+									
+												// use an 'interpolate' expression to add a smooth transition effect to the
+												// buildings as the user zooms in
+												'fill-extrusion-height': [
+													"interpolate", ["linear"], ["zoom"],
+													15, 0,
+													15.05, ["get", "height"]
+												],
+												'fill-extrusion-base': [
+													"interpolate", ["linear"], ["zoom"],
+													15, 0,
+													15.05, ["get", "min_height"]
+												],
+												'fill-extrusion-opacity': .6
+											}
+										}, labelLayerId);
+									});
+									</script></p>
 							</section>
 
 						<!-- Second Section -->
@@ -101,22 +169,10 @@
 									</li>
 								</ul>
 								<p class="content">Nam elementum nisl et mi a commodo porttitor. Morbi sit amet nisl eu arcu faucibus hendrerit vel a risus. Nam a orci mi, elementum ac arcu sit amet, fermentum pellentesque et purus. Integer maximus varius lorem, sed convallis diam accumsan sed. Etiam porttitor placerat sapien, sed eleifend a enim pulvinar faucibus semper quis ut arcu. Ut non nisl a mollis est efficitur vestibulum. Integer eget purus nec nulla mattis et accumsan ut magna libero. Morbi auctor iaculis porttitor. Sed ut magna ac risus et hendrerit scelerisque. Praesent eleifend lacus in lectus aliquam porta. Cras eu ornare dui curabitur lacinia.</p>
-								<footer class="major">
-								</footer>
 							</section>
 
 						<!-- Get Started -->
-							<section id="cta" class="main special">
-								<header class="major">
-									<h2>Congue imperdiet</h2>
-									<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-									posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
-								</header>
-								<footer class="major">
-									<ul class="actions special">
-									</ul>
-								</footer>
-							</section>
+
 
 					</div>
 

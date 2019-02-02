@@ -3,7 +3,7 @@ from video_recog import VideoRecognize
 from traffic_controller import TrafficController
 import mapbox_helper as mb
 
-video = "data0.mp4"
+video = "rushhour.mp4"
 graph = "frozen_inference_graph.pb"
 videoGrab = VideoRecognize(video, graph)
 

@@ -45,7 +45,7 @@ class VideoRecognize:
             rows = img.shape[0]
             cols = img.shape[1]
             inp = img
-    #        inp = cv2.resize(img, (300, 300))
+            inp = cv2.resize(img, (300, 300))
             inp = inp[:, :, [2, 1, 0]]  # BGR2RGB
         
             # Run the model
@@ -67,8 +67,7 @@ class VideoRecognize:
                     right = bbox[3] * cols
                     bottom = bbox[2] * rows
                     cv2.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
-            #        cv2.imshow('Video Feed', img)
-                
+            cv2.imshow('video', img)
             
             #getting the counts of different objects
             personCount = 0
@@ -81,6 +80,7 @@ class VideoRecognize:
             
             objCount = int(out[0][0])
             objList = out[3][0][:objCount]
+            print(objList)
             for i in range(objCount):
                 if objList[i] == 1:
                     personCount = personCount + 1
@@ -95,7 +95,7 @@ class VideoRecognize:
                 elif objList[i] == 8:
                     truckCount = truckCount + 1
             trafficCount = carCount + motorcycleCount + busCount + truckCount
-            
+            cv2.waitKey(50)
             return (trafficCount, personCount)
         else:
             return (-1, -1)
