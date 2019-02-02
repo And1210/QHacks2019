@@ -2337,19 +2337,18 @@ background-image: linear-gradient(120deg, #35B234 0%, #96e6a1 100%);
 /* Image */
 
 	.image {
-		border-radius: 8px;
+
 		border: 0;
 		display: inline-block;
 		position: relative;
 	}
 
 		.image img {
-			border-radius: 8px;
-			display: block;
+			display: float;
 		}
 
 		.image.left, .image.right {
-			max-width: 40%;
+			max-width: 100%;
 		}
 
 			.image.left img, .image.right img {
