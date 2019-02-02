@@ -5,7 +5,7 @@
       "properties": {
         "title": "City Hall",
         "marker-color": "#ff0000"
-      	"marker-symbol": "circle"
+      	"marker-symbol": "circle-15"
       },
       "geometry": {
         "coordinates": [
@@ -20,7 +20,7 @@
       "properties": {
         "title": "Island",
         "marker-color": "#00ff00"
-	      "marker-symbol": "circle"
+	      "marker-symbol": "circle-15"
       },
       "geometry": {
         "coordinates": [
@@ -35,7 +35,7 @@
       "properties": {
         "title": "Public Library",
         "marker-color": "#0000ff"
-	      "marker-symbol": "circle"
+	      "marker-symbol": "circle-15"
       },
       "geometry": {
         "coordinates": [
