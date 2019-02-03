@@ -3760,3 +3760,15 @@ background-image: linear-gradient(120deg, #35B234 0%, #96e6a1 100%);
 			}
 
 		}
+		
+		#secret{
+		color: white;
+		padding: 0;
+		margin: 0;
+		}
+		#secret:hover{
+		color: #35B234;
+		font-size: 56px;
+		padding: 0;
+		margin: 0;
+		}
