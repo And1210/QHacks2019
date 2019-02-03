@@ -8,8 +8,6 @@
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
 		<link rel="stylesheet" href="website/assets/css/main.css" />
-		<script>
-			</script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -18,7 +16,7 @@
 					<header id="header" class="alt">
 						<span class="logo"><img src="./website/images/logo.svg.png" alt="" /></span>
 						<!-- <h1 style="font-size: 150px; font-family:Arial" >TraffIQ </h1> -->
-						<p>Web Application that takes data from cameras and uses ML for road safety</p>
+						<p><b>Web Application that takes data from cameras and uses ML for road safety</b></p>
 					</header>
 				<!-- Nav -->
 					<nav id="nav">
@@ -37,7 +35,7 @@
 								<div class="spotlight">
 									<div class="content">
 										<header class="major">
-											<h2><span id="typed"></span>Hacking for Society<br>for Change<br>for Better Lives</h2>
+												<h2>We hack for <div id="changeText"></div></h2>
 										</header>
 										<p>Our web application aims to improve lives by making the roads safer via <b>Machine Learning, Artificial Intelligence, Image Recognition, Computational Skills, Database Management and Graphing algortithms.</b></p>
 									</div>
@@ -266,5 +264,20 @@
 			<script src="website/assets/js/util.js"></script>
 			<script src="website/assets/js/main.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
+			<script>
+				var text = ["Change", "Society", "Fun", "The World"];
+				var counter = 0;
+				var elem = document.getElementById("changeText");
+				var inst = setInterval(change, 1500);
+				function change() {
+				  elem.innerHTML = text[counter];
+				  counter++;
+				  if (counter >= text.length) {
+					counter = 0;
+					// clearInterval(inst); // uncomment this if you want to stop refreshing after one cycle
+				  }
+				}
+					</script>
+			
 	</body>
 </html>
