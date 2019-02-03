@@ -25,6 +25,8 @@ wb2 = load_workbook('nodes.xlsx')
 
 # _____________________________________ Classes _________________________________
 
+letters = "ABCDEF"
+    
 # creates a graph to allow linking between the different classes
 class Graph():
     def __init__(self):
@@ -183,21 +185,16 @@ class Car():
         self.tTime = 0
         self.tDist = 1
         self.active = True
-        self.distance = self.currentNode.distances[self.direction]
-        self.tDist += self.currentNode.distances[self.direction]
-        self.time = self.currentNode.time[self.direction]
-        self.tTime = self.currentNode.distances[self.direction]
-        self.velocity = self.distance/self.time
         
     def getCoords(self):
         if (self.direction == 0):
-            return (self.nextNode.y - self.distance, self.nextNode.x)
+            return (self.nextNode.y - float(self.distance)/111111, self.nextNode.x)
         elif (self.direction == 1):
-            return (self.nextNode.y, self.nextNode.x - self.distance)
+            return (self.nextNode.y, self.nextNode.x - float(self.distance)/111111)
         elif (self.direction == 2):
-            return (self.nextNode.y + self.distance, self.nextNode.x)
+            return (self.nextNode.y + float(self.distance)/111111, self.nextNode.x)
         else:
-            return (self.nextNode.y, self.nextNode.x + self.distance)
+            return (self.nextNode.y, self.nextNode.x + float(self.distance)/111111)
 
     def passInter(self):
         self.currentNode = self.nextNode
@@ -232,7 +229,6 @@ def setupField():
     toronto = Graph()
     
     
-    letters = "ABCDEF"
     for i in range(0,6):
         for n in range(1,6):
             print("{}{}".format(str(letters[i]),n), wb2["Sheet1"]["{}{}".format(str(letters[i]), n)].value)
