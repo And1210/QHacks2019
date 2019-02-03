@@ -32,6 +32,7 @@ class Graph():
         self.vertices = {}
         self.neighbours = 0
         self.cars = []
+        self.edges = 0
 
     def initCar(self, strNode):
         node = self.findNode(strNode)
@@ -77,6 +78,7 @@ class Graph():
             else:
                 dir = 2
 
+            self.edges += 1
             # this portion adds the neighbours to each other, since it is unidirectional
             print("linking:", strA+',', strB)
             self.vertices[strA].addNeighbour(objB,(dir+2)%4, distance, time)
@@ -89,6 +91,7 @@ class Graph():
         if objA in self.vertices and objB in self.vertices:
             # this portion removes he neighbours from each other, since it is unidirectional
             # returns if the operation succeeded
+            self.edges += 1
             return self.vertices[objA].removeNeighbour(objB) and self.vertices[objB].removeNeighbour(objA)
         return False
 
@@ -178,8 +181,23 @@ class Car():
         self.distance = 0
         self.velocity = 0
         self.tTime = 0
-        self.tDist = 0
+        self.tDist = 1
         self.active = True
+        self.distance = self.currentNode.distances[self.direction]
+        self.tDist += self.currentNode.distances[self.direction]
+        self.time = self.currentNode.time[self.direction]
+        self.tTime = self.currentNode.distances[self.direction]
+        self.velocity = self.distance/self.time
+        
+    def getCoords(self):
+        if (self.direction == 0):
+            return (self.nextNode.y - self.distance, self.nextNode.x)
+        elif (self.direction == 1):
+            return (self.nextNode.y, self.nextNode.x - self.distance)
+        elif (self.direction == 2):
+            return (self.nextNode.y + self.distance, self.nextNode.x)
+        else:
+            return (self.nextNode.y, self.nextNode.x + self.distance)
 
     def passInter(self):
         self.currentNode = self.nextNode
@@ -209,30 +227,31 @@ class Car():
 
 
 
-# Create and link the graph
-toronto = Graph()
-
-
-letters = "ABCDEF"
-for i in range(0,6):
-    for n in range(1,6):
-        print("{}{}".format(str(letters[i]),n), wb2["Sheet1"]["{}{}".format(str(letters[i]), n)].value)
-        toronto.addVertex(wb2["Sheet1"]["{}{}".format(str(letters[i]),n)].value)
-
-for i in range (0,6):
-    for n in range(1,6):
-        if i < 5:
-            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
-                                 wb2["Sheet1"]["{}{}".format(letters[i + 1], n)].value)
-        if n < 5:
-            toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
-                                 wb2["Sheet1"]["{}{}".format(letters[i], n + 1)].value)
-
-#TODO, save into a pickle for faster startup
-
-for n in range(10):
-    for i in range(10):
-        toronto.initCar(wb2["Sheet2"]["{}{}".format(letters[0], randint(1,18))].value)
-    toronto.update(10)
+def setupField():
+    # Create and link the graph
+    toronto = Graph()
+    
+    
+    letters = "ABCDEF"
+    for i in range(0,6):
+        for n in range(1,6):
+            print("{}{}".format(str(letters[i]),n), wb2["Sheet1"]["{}{}".format(str(letters[i]), n)].value)
+            toronto.addVertex(wb2["Sheet1"]["{}{}".format(str(letters[i]),n)].value)
+    
+    for i in range (0,6):
+        for n in range(1,6):
+            if i < 5:
+                toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                     wb2["Sheet1"]["{}{}".format(letters[i + 1], n)].value)
+            if n < 5:
+                toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
+                                     wb2["Sheet1"]["{}{}".format(letters[i], n + 1)].value)
+    
+    #TODO, save into a pickle for faster startup
+    for n in range(10):
+        for i in range(10):
+            toronto.initCar(wb2["Sheet2"]["{}{}".format(letters[0], randint(1,18))].value)
+        toronto.update(4)
+    return toronto
 
 

@@ -89,6 +89,7 @@
 									  map.on('load', function () {
 									window.setInterval(function() {
 										map.getSource('intersections').setData('https://anantj24.pythonanywhere.com/');
+										map.getSource('cars').setData('http://localhost:5000');
 									}, 1000);
 									map.addSource('intersections', {type: 'geojson', data: 'https://anantj24.pythonanywhere.com/'})
 										map.addLayer({
@@ -110,16 +111,16 @@
 														'#ccc'
 													]
 												}
-											});
-										var layers = map.getStyle().layers;
-										var labelLayerId;
-										for (var i = 0; i < layers.length; i++) {
+										});
+									var layers = map.getStyle().layers;
+									var labelLayerId;
+									for (var i = 0; i < layers.length; i++) {
 										if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-										labelLayerId = layers[i].id; 
-										break;
+											labelLayerId = layers[i].id; 
+											break;
 										}
-										}
-										map.addLayer({
+									}
+									map.addLayer({
 										'id': '3d-buildings',
 										'source': 'composite',
 										'source-layer': 'building',
@@ -132,27 +133,33 @@
 										"interpolate", ["linear"], ["zoom"],
 										15, 0,
 										15.05, ["get", "height"]
-										],
-										'fill-extrusion-base': [
-										"interpolate", ["linear"], ["zoom"],
-										15, 0,
-										15.05, ["get", "min_height"]
-										],
-										'fill-extrusion-opacity': .6
-										}
+											],
+											'fill-extrusion-base': [
+											"interpolate", ["linear"], ["zoom"],
+											15, 0,
+											15.05, ["get", "min_height"]
+											],
+											'fill-extrusion-opacity': .6
+											}
 										}, labelLayerId);
-										window.setInterval(function() {
-										map.getSource('cars').setData('https://anantj24.pythonanywhere.com/');
-									}, 1000);
-									map.addSource('cars', {type: 'geojson', data: 'https://anantj24.pythonanywhere.com/'})
-									map.addLayer({
+										map.addSource('cars', {type: 'geojson', data: 'http://localhost:5000'})
+											map.addLayer({
 												'id': 'cars',
-												'type': 'line',
+												'type': 'circle',
 												'source': 'cars',
 												'paint': {
-													'line-color': '#FFFF00'
+													'circle-radius': {
+														'base': 1.5,
+														'stops': [[12, 2], [22, 180]]
+													},
+													'circle-color': [
+														'match',
+														['get', 'description'],
+														'1', '#0000ff',
+														'#ccc'
+													]
 												}
-											});
+										});
 										});
 										var nav = new mapboxgl.NavigationControl({
         showCompass: true,
