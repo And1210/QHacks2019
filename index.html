@@ -140,51 +140,35 @@
 											],
 											'fill-extrusion-opacity': .6
 											}
-										}, labelLayerId);
-<<<<<<< HEAD
-											
-										});
-										var nav = new mapboxgl.NavigationControl({
-=======
-										map.addSource('cars', {type: 'geojson', data: 'http://localhost:5000'})
-											map.addLayer({
-												'id': 'cars',
-												'type': 'circle',
-												'source': 'cars',
-												'paint': {
-													'circle-radius': {
-														'base': 1.5,
-														'stops': [[12, 2], [22, 180]]
-													},
-													'circle-color': [
-														'match',
-														['get', 'description'],
-														'1', '#0000ff',
-														'#ccc'
-													]
-												}
-										});
-										var nav1 = new mapboxgl.NavigationControl({
-<<<<<<< HEAD
->>>>>>> 529b4925f865fa4f93b5ad8deee0179c532baa5c
-=======
->>>>>>> 529b4925f865fa4f93b5ad8deee0179c532baa5c
+										}, labelLayerId);						
+										map.addSource('cars', {type: 'geojson', data: 'http://localhost:5000'});
+										map.addLayer({
+											'id': 'cars',
+											'type': 'circle',
+											'source': 'cars',
+											'paint': {
+												'circle-radius': {
+													'base': 1.5,
+													'stops': [[12, 2], [22, 180]]
+												},
+												'circle-color': [
+													'match',
+													['get', 'description'],
+													'1', '#0000ff',
+													'#ccc'
+												]
+											}
+									});
+	var nav1 = new mapboxgl.NavigationControl({
         showCompass: true,
         showZoom: false
       });
-
 map.addControl(nav1);
-var nav2 = new mapboxgl.NavigationControl({
-        showCompass: false,
-        showZoom: true,
-		
-      });
-
+});
 									</script>
 									<br>
 									<video width="100%" height="840" float="center" controls autoplay loop muted>
 										<source src="video.mp4" type="video/mp4">
-									  Your browser does not support the video tag.
 									  </video>
 									</section>
 							<section id="second" class="main special">
