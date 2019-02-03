@@ -68,7 +68,7 @@ class Graph():
             # Det distance between the nodes
             dist = distance_matrix.distance_matrix(client, (objA.y, objA.x), (objB.y, objB.x), mode="driving")
             distance = (((dist.get('rows'))[0].get('elements'))[0].get('distance')).get('value')
-
+            time = (((dist.get('rows'))[0].get('elements'))[0].get('duration')).get('value')
             # determines the direction that the node is linked
             dir = math.atan2(objA.y-objB.y, objA.x-objB.x)
             if (math.pi/4 > abs(dir)): dir = 1
@@ -79,8 +79,8 @@ class Graph():
 
             # this portion adds the neighbours to each other, since it is unidirectional
             print("linking:", strA+',', strB)
-            self.vertices[strA].addNeighbour(objB,(dir+2)%4, distance)
-            self.vertices[strB].addNeighbour(objA, dir, distance)
+            self.vertices[strA].addNeighbour(objB,(dir+2)%4, distance, time)
+            self.vertices[strB].addNeighbour(objA, dir, distance, time)
             # return if successful
             return True
         return False
@@ -93,14 +93,15 @@ class Graph():
         return False
 
 
-    def update(self, time, intensity):
+    def update(self, time):
         loss = 0
-        traffic = np.zeros((self.getVertices(), self.getVertices()))
-        waiting = np.zeros((self.getVertices(), self.getVertices()))
-        for i in range(len(self.cars),0,-1):
+        traffic = np.zeros((self.numVertices(), self.numVertices()))
+        waiting = np.zeros((self.numVertices(), self.numVertices()))
+        for i in range(len(self.cars)-1,-1,-1):
             if (not self.cars[i].active):
                 loss += self.cars[i].tTime/self.cars[i].tDist
                 del(self.cars[i])
+                self.initCar(wb2["Sheet1"]["{}{}".format(letters[0], randint(1,18))].value)
             else:
                 if (self.cars[i].distance <= 0):
                     # TODO make this part exponential?
@@ -110,11 +111,9 @@ class Graph():
                         waiting[self.cars[i].currentNode.num][self.cars[i].nextNode.num] += 1
                         self.cars[i].distance = 0
                 else:
-                    self.cars[i].distance -= self.cars[i].velocity * self.cars[i].nextNodes.traffic[self.cars[i].direction]
+                    self.cars[i].distance -= self.cars[i].velocity * self.cars[i].nextNode.traffic[self.cars[i].direction]*time
                     traffic[self.cars[i].currentNode.num][self.cars[i].nextNode.num] += 1
         return [traffic, waiting, loss]
-
-
 
 
 
@@ -123,7 +122,7 @@ class Node():
     def __init__(self, name, num):
         # a value holding the location of the place
         # if a user owns all nodes of a continent then they gain more troops
-        self.nodeNum = num
+        self.num = num
         self.direction = True
         # how many troops they have
         # the position to display on the screen
@@ -134,12 +133,14 @@ class Node():
         self.act = Queue()
         self.distances = [0 for i in range(4)]
         self.traffic = [0 for i in range(4)]
+        self.time = [0 for i in range(4)]
 
-    def addNeighbour(self, obj, dir, distance):
+    def addNeighbour(self, obj, dir, distance, time):
         # adds a new neighbour to the vertex with a given distance
         if self.neighbours[dir] == None:
             self.neighbours[dir] = obj
             self.distances[dir] = distance
+            self.time[dir] = time
             return True
         return False
 
@@ -179,24 +180,30 @@ class Car():
         self.tTime = 0
         self.tDist = 0
         self.active = True
-        self.waiting = False
+
+    def passInter(self):
+        self.currentNode = self.nextNode
+        self.detNext()
+
 
     def detNext(self):
-        choice = randint(0,100)
-        # turn car right
-        if choice < 12:
-            self.direction = (self.direction + 1) % 4
-        # turn car left
-        if choice < 24:
-            self.direction = (self.direction - 1) % 4
-        self.nextNode = self.nextNode.getNeighbours[self.direction]
-        if nextNode == None:
-            self.active = False
-        else:
-            self.distance = self.currentNode.distances[self.direction]
-            self.tDist += self.currentNode.distances[self.direction]
-            self.time= self.currentNode.distances[self.direction]
-            self.tTime = self.currentNode.distances[self.direction]
+        if self.active:
+            choice = randint(0,100)
+            # turn car right
+            if choice < 12:
+                self.direction = (self.direction + 1) % 4
+            # turn car left
+            if choice < 24:
+                self.direction = (self.direction - 1) % 4
+            self.nextNode = self.nextNode.getNeighbours()[self.direction]
+            if self.nextNode == None:
+                self.active = False
+            else:
+                self.distance = self.currentNode.distances[self.direction]
+                self.tDist += self.currentNode.distances[self.direction]
+                self.time = self.currentNode.time[self.direction]
+                self.tTime = self.currentNode.distances[self.direction]
+                self.velocity = self.distance/self.time
 
 
 
@@ -223,5 +230,9 @@ for i in range (0,6):
 
 #TODO, save into a pickle for faster startup
 
-toronto.initCar(wb2["Sheet1"]["{}{}".format(letters[0], 1)].value)
+for n in range(10):
+    for i in range(10):
+        toronto.initCar(wb2["Sheet2"]["{}{}".format(letters[0], randint(1,18))].value)
+    toronto.update(10)
+
 
