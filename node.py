@@ -126,8 +126,20 @@ class Node():
     def changeDirection(self):
         self.direction = not self.direction
 
-
+# Create and link the graph
 toronto = Graph()
+
+class Car():
+    def __init__(self, obj):
+        self.currentNode = obj
+        self.nextNode = obj.neighbours
+        self.direction = 1
+        self.time
+        self.distance
+        self.alive = True
+
+
+
 
 
 letters = "ABCDEF"
@@ -145,10 +157,7 @@ for i in range (0,6):
             toronto.addNeighbour(wb2["Sheet1"]["{}{}".format(letters[i], n)].value,
                                  wb2["Sheet1"]["{}{}".format(letters[i], n + 1)].value)
 
-print(toronto.numVertices())
-print(toronto.getVertices())
-print(toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getCoord())
-for i in range(0,4):
-    print(i,)
-    if (toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getNeighbours())[i] != None:
-        print(toronto.findNode(wb2["Sheet1"]["{}{}".format(letters[0], 2)].value).getNeighbours()[i][0].getCoord())
+#TODO, save into a pickle for faster startup
+
+
+
