@@ -187,14 +187,14 @@ class Car():
         self.active = True
         
     def getCoords(self):
-        if (self.direction == 0):
-            return (self.nextNode.y - float(self.distance)/111111, self.nextNode.x)
-        elif (self.direction == 1):
-            return (self.nextNode.y, self.nextNode.x - float(self.distance)/111111)
-        elif (self.direction == 2):
-            return (self.nextNode.y + float(self.distance)/111111, self.nextNode.x)
-        else:
-            return (self.nextNode.y, self.nextNode.x + float(self.distance)/111111)
+        y1,x1 = self.nextNode.getCoord()
+        y2,x2 = self.currentNode.getCoord()
+        percent = float(self.currentNode.distances[self.direction] - distance) / self.currentNode.distances[self.direction]
+        gapY = y1 - y2
+        gapX = x1 - x2
+        x = x1 + gap*percent
+        y = y1 + gap*percent
+        return(x, y)
 
     def passInter(self):
         self.currentNode = self.nextNode
@@ -219,10 +219,6 @@ class Car():
                 self.time = self.currentNode.time[self.direction]
                 self.tTime = self.currentNode.distances[self.direction]
                 self.velocity = self.distance/self.time
-
-
-
-
 
 def setupField():
     # Create and link the graph
