@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<title>TraffiqHack 2019</title>
+		<script type="text/javascript">
+			if (screen.width <= 577) {
+			document.location = "mobile.html";
+			}
+			</script>
 		<meta charset="utf-8" />
 		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -10,15 +15,12 @@
 		<link rel="stylesheet" href="website/assets/css/main.css" />
 	</head>
 	<body class="is-preload">
-		<!-- Wrapper -->
 			<div id="wrapper">
-				<!-- Header -->
 					<header id="header" class="alt">
 						<span class="logo"><img src="./website/images/logo.svg.png" alt="" /></span>
 						<!-- <h1 style="font-size: 150px; font-family:Arial" >TraffIQ </h1> -->
 						<p><b>Web Application that takes data from cameras and uses ML for road safety</b></p>
 					</header>
-				<!-- Nav -->
 					<nav id="nav">
 						<ul>
 							<li><a href="#intro" class="active">Introduction</a></li>
@@ -29,9 +31,7 @@
 							<li><a href="#footer">Contact Us</a></li>
 						</ul>
 					</nav>
-				<!-- Main -->
 					<div id="main">
-						<!-- Introduction -->
 							<section id="intro" class="main">
 								<div class="spotlight">
 									<div class="content">
@@ -42,7 +42,6 @@
 									</div>
 								</div>
 							</section>
-						<!-- First Section -->
 							<section id="first" class="main special">
 								<header class="major">
 									<h2>Features</h2>
@@ -87,52 +86,20 @@
 									//   center: [-79.3832, 43.6532],
 									//   zoom: 10
 									// });
-
-									// map.on('click', function(e) {
-									//   var features = map.queryRenderedFeatures(e.point, {
-									// 	layers: ['toronto'] // replace this with the name of the layer
-									//   });
-									//   if (!features.length) {
-									// 	return;
-									//   }
 									  map.on('load', function () {
-
 									window.setInterval(function() {
-										map.getSource('intersections').setData('http://192.168.137.1');
+										map.getSource('intersections').setData('https://anantj24.pythonanywhere.com/');
 									}, 1000);
-
-									map.addSource('intersections', {type: 'geojson', data: 'http://192.168.137.1'})
-
-									//   var feature = features[0];
-									//   var popup = new mapboxgl.Popup({ offset: [0, 0] })
-									// 	.setLngLat(feature.geometry.coordinates)
-									// 	.setHTML('<h2>' + feature.properties.title + '</h2><p>Value:' + feature.properties.description + '</p>')
-									// 	.setLngLat(feature.geometry.coordinates)
-									// 	.addTo(map);
-									// });									
-									// map.on('load', function() {
-									// 	// Insert the layer beneath any symbol layer.
-									// 	var layers = map.getStyle().layers;
-									
-									// 	var labelLayerId;
-									// 	for (var i = 0; i < layers.length; i++) {
-									// 		if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-									// 			labelLayerId = layers[i].id;
-									// 			break;
-									// 		}
-									// 	}
+									map.addSource('intersections', {type: 'geojson', data: 'https://anantj24.pythonanywhere.com/'})
 										map.addLayer({
 												'id': 'intersections',
 												'type': 'circle',
 												'source': 'intersections',
 												'paint': {
-													// make circles larger as the user zooms from z12 to z22
 													'circle-radius': {
 														'base': 1.5,
 														'stops': [[12, 2], [22, 180]]
 													},
-													// color circles by ethnicity, using a match expression
-													// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
 													'circle-color': [
 														'match',
 														['get', 'description'],
@@ -140,14 +107,11 @@
 														'1', '#0000ff',
 														'2', '#ff0000',
 														'3', '#000000',
-														/* other */ '#ccc'
+														'#ccc'
 													]
 												}
 											});
-// Insert the layer beneath any symbol layer.
-
 										var layers = map.getStyle().layers;
-										
 										var labelLayerId;
 										for (var i = 0; i < layers.length; i++) {
 										if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
@@ -155,7 +119,6 @@
 										break;
 										}
 										}
-										
 										map.addLayer({
 										'id': '3d-buildings',
 										'source': 'composite',
@@ -165,9 +128,6 @@
 										'minzoom': 15,
 										'paint': {
 										'fill-extrusion-color': '#aaa',
-										
-										// use an 'interpolate' expression to add a smooth transition effect to the
-										// buildings as the user zooms in
 										'fill-extrusion-height': [
 										"interpolate", ["linear"], ["zoom"],
 										15, 0,
@@ -181,31 +141,21 @@
 										'fill-extrusion-opacity': .6
 										}
 										}, labelLayerId);
-
 										window.setInterval(function() {
-										map.getSource('cars').setData('http://192.168.137.1');
+										map.getSource('cars').setData('https://anantj24.pythonanywhere.com/');
 									}, 1000);
-
-									map.addSource('cars', {type: 'geojson', data: 'http://192.168.137.1'})
+									map.addSource('cars', {type: 'geojson', data: 'https://anantj24.pythonanywhere.com/'})
 									map.addLayer({
 												'id': 'cars',
 												'type': 'line',
 												'source': 'cars',
 												'paint': {
-													// make circles larger as the user zooms from z12 to z22
-													// 'circle-radius': {
-													// 	'base': 1.5,
-													// 	'stops': [[12, 2], [22, 180]]
-													// },
-													// color circles by ethnicity, using a match expression
-													// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
 													'line-color': '#FFFF00'
 												}
 											});
 										});
 									</script>
 							</section>
-
 							<section id="second" class="main special">
 								<header class="major">
 									<h2>ABOUT</h2>
@@ -222,8 +172,6 @@
 								<li>The processed information is presented on this website</li>
 								</ul>
 							</section>
-
-						<!-- Second Section -->
 							<section id="third" class="main special">
 								<header class="major">
 									<h2>STATS</h2>
@@ -243,28 +191,22 @@
 										<strong>4</strong> Coders 
 									</li>
 								</ul>
-								<!-- <p class="content">Nam elementum nisl et mi a commodo porttitor. Morbi sit amet nisl eu arcu faucibus hendrerit vel a risus. Nam a orci mi, elementum ac arcu sit amet, fermentum pellentesque et purus. Integer maximus varius lorem, sed convallis diam accumsan sed. Etiam porttitor placerat sapien, sed eleifend a enim pulvinar faucibus semper quis ut arcu. Ut non nisl a mollis est efficitur vestibulum. Integer eget purus nec nulla mattis et accumsan ut magna libero. Morbi auctor iaculis porttitor. Sed ut magna ac risus et hendrerit scelerisque. Praesent eleifend lacus in lectus aliquam porta. Cras eu ornare dui curabitur lacinia.</p> -->
 							</section>
 							<section id="fourth" class="main special">
 									<header class="major">
 										<h2>TEAM</h2><br><br>
 										<ul style="list-style: none; float: center;">
-										<li><img src="./website/images/al(1).jpg" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>The team hard at work.</li><br><br><br>
-										<li><img src="./website/images/al(4).jpg" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>Algorithm Development in Progress.</li>
+										<li><img src="./website/images/a1.png" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>The team hard at work.</li><br><br><br>
+										<li><img src="./website/images/a2.png" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>Algorithm Development in Progress.</li>
 											</ul>
 											<p>Made at QHacks 2019 by:<br>Anant Jain<br>Andrew Farley<br>Colin Cummung<br>Jack Dementer</p>
 									</header>
-
-									<!-- <p class="content">Nam elementum nisl et mi a commodo porttitor. Morbi sit amet nisl eu arcu faucibus hendrerit vel a risus. Nam a orci mi, elementum ac arcu sit amet, fermentum pellentesque et purus. Integer maximus varius lorem, sed convallis diam accumsan sed. Etiam porttitor placerat sapien, sed eleifend a enim pulvinar faucibus semper quis ut arcu. Ut non nisl a mollis est efficitur vestibulum. Integer eget purus nec nulla mattis et accumsan ut magna libero. Morbi auctor iaculis porttitor. Sed ut magna ac risus et hendrerit scelerisque. Praesent eleifend lacus in lectus aliquam porta. Cras eu ornare dui curabitur lacinia.</p> -->
 								</section>
-						<!-- Get Started -->
 					</div>
-				<!-- Footer -->
 					<section id="footer">
+						<h1>Contact US</h1>
 					<div class="typeform-widget" data-url="https://anantjain.typeform.com/to/kvZFgq" data-hide-headers=true data-hide-footer=true style="width: 1200px; height: 750px;"></div> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm", b="https://embed.typeform.com/"; if(!gi.call(d,id)) { js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script> <div style="font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;"> powered by <a href="https://admin.typeform.com/signup?utm_campaign=kvZFgq&utm_source=typeform.com-12246374-Basic&utm_medium=typeform&utm_content=typeform-embedded-poweredbytypeform&utm_term=EN" style="color: #999" target="_blank">Typeform</a> </div>
 						</section>
-
-		<!-- Scripts -->
 			<script src="website/assets/js/jquery.min.js"></script>
 			<script src="website/assets/js/jquery.scrollex.min.js"></script>
 			<script src="website/assets/js/jquery.scrolly.min.js"></script>
@@ -283,10 +225,45 @@
 				  counter++;
 				  if (counter >= text.length) {
 					counter = 0;
-					// clearInterval(inst); // uncomment this if you want to stop refreshing after one cycle
 				  }
 				}
 					</script>
-			
 	</body>
 </html>
+
+
+
+
+<!-- TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTD                                                   TDTDTD                           TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTD                                                   TDTDTD                                TDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTD                                                   TDTDTD                                   TDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD         TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDT                      TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDT                    DTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                  TDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD                 TDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDTDTDTDTDTD             DTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD              TDTDTDTDTDTDTDTDTDT                   TDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD                                                TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD                                              TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD        TDTDTD                                          TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+TDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTDTD
+
+-->
