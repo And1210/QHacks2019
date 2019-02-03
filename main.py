@@ -11,7 +11,7 @@ graph = "frozen_inference_graph.pb"
 videoGrab = VideoRecognize(video, graph)
 
 #Setting up traffic controller
-controllers = [TrafficController([2*(i%2), 2*((i+1)%2), 2*(i%2), 2*((i+1)%2)]) for i in range(30)]
+controllers = [TrafficController([0, 2, 0, 2]) for i in range(30)]
 
 #Setting up count arrays
 vehicleCounts = np.zeros(4)
@@ -48,7 +48,7 @@ def getFeatures():
     out = out + '], "type": "FeatureCollection"}'
     return out
 
-print(getFeatures())
+#print(getFeatures())
 
 #Start server
 app = Flask(__name__)

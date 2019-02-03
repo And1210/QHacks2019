@@ -88,10 +88,9 @@
 									// });
 									  map.on('load', function () {
 									window.setInterval(function() {
-										map.getSource('intersections').setData('https://anantj24.pythonanywhere.com/');
-										map.getSource('cars').setData('http://localhost:5000');
-									}, 1000);
-									map.addSource('intersections', {type: 'geojson', data: 'https://anantj24.pythonanywhere.com/'})
+										map.getSource('intersections').setData('http://localhost:5000');
+									}, 50);
+									map.addSource('intersections', {type: 'geojson', data: 'http://localhost:5000'})
 										map.addLayer({
 												'id': 'intersections',
 												'type': 'circle',
@@ -142,6 +141,11 @@
 											'fill-extrusion-opacity': .6
 											}
 										}, labelLayerId);
+<<<<<<< HEAD
+											
+										});
+										var nav = new mapboxgl.NavigationControl({
+=======
 										map.addSource('cars', {type: 'geojson', data: 'http://localhost:5000'})
 											map.addLayer({
 												'id': 'cars',
@@ -160,15 +164,26 @@
 													]
 												}
 										});
-										});
-										var nav = new mapboxgl.NavigationControl({
+										var nav1 = new mapboxgl.NavigationControl({
+>>>>>>> 529b4925f865fa4f93b5ad8deee0179c532baa5c
         showCompass: true,
         showZoom: false
       });
 
-map.addControl(nav);
+map.addControl(nav1);
+var nav2 = new mapboxgl.NavigationControl({
+        showCompass: false,
+        showZoom: true,
+		
+      });
+
 									</script>
-							</section>
+									<br>
+									<video width="100%" height="840" float="center" controls autoplay loop muted>
+										<source src="video.mp4" type="video/mp4">
+									  Your browser does not support the video tag.
+									  </video>
+									</section>
 							<section id="second" class="main special">
 								<header class="major">
 									<h2>ABOUT</h2>
@@ -214,6 +229,7 @@ map.addControl(nav);
 										<li><img src="./website/images/a2.png" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>Algorithm Development in Progress.</li>
 											</ul>
 											<p>Made at <b>QHacks 2019</b> by<br>Anant Jain<br>Andrew Farley<br>Colin Cummung<br>Jack Dementer</p>
+											<p id="secret">TD TD TD TD TD TD TD TD TD TD TD TD TD TD TD TD TD</p>
 									</header>
 								</section>
 					</div>
