@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>TraffiqHack 2019</title>
+		<title>TraffIQHack 2019</title>
 		<script type="text/javascript">
 			if (screen.width <= 577) {
 			document.location = "mobile.html";
@@ -19,7 +19,7 @@
 					<header id="header" class="alt">
 						<span class="logo"><img src="./website/images/logo.svg.png" alt="" /></span>
 						<!-- <h1 style="font-size: 150px; font-family:Arial" >TraffIQ </h1> -->
-						<p><b>Web Application that takes data from cameras and uses ML for road safety</b></p>
+						<p><b>An IoT Application that retrieves data from cameras and uses Machine Learning to improve Road Safety and efficiency, thus leading to sustainable cities.<br><br>QHacks 2019</b></p>
 					</header>
 					<nav id="nav">
 						<ul>
@@ -36,9 +36,9 @@
 								<div class="spotlight">
 									<div class="content">
 										<header class="major">
-												<h2>We hack for <div id="changeText"></div></h2>
+												<h2>We hack for<div id="changeText">Prosperity</div></h2>
 										</header>
-										<p>Our web application aims to improve lives by making the roads safer via <b>Machine Learning, Artificial Intelligence, Image Recognition, Computational Skills, Database Management and Graphing algortithms.</b></p>
+										<p>This application aims to improve lives by making the roads safer and travel more efficient via <b>Machine Learning, Artificial Intelligence, Image Recognition, Computational Skills, Database Management and Graphing Algortithms.</b></p>
 									</div>
 								</div>
 							</section>
@@ -49,8 +49,8 @@
 								<ul class="features">
 									<li>
 										<span class="icon style1 fa-code fa-3x"></span>
-										<h3>Languages Used</h3>
-										<p>Python, HTML, CSS, JavaScript</p>
+										<h3>Technologies Used</h3>
+										<p>Python, HTML, CSS, JavaScript, Machine Learning (Artificial Intelligence)</p>
 									</li>
 									<li>
 										<span class="icon style3 fa-map fa-3x"></span>
@@ -59,8 +59,8 @@
 									</li>
 									<li>
 										<span class="icon style5 fa-flash fa-3x"></span>
-										<h3>Frameworks and Hardware</h3>
-										<p>React, Raspberry Pi</p>
+										<h3>Hardware</h3>
+										<p>Raspberry Pi Board and compatible camera</p>
 									</li>
 								</ul>
 								<footer class="major">
@@ -76,7 +76,7 @@
 								var map = new mapboxgl.Map({
 									container: 'map',
 									style: 'mapbox://styles/mapbox/light-v9',
-									zoom: 10,
+									zoom: 11,
 									center: [-79.3832, 43.6532]
 								});
 									// mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hbnRqIiwiYSI6ImNqcm4wa2txYTA1NHo0NGw5ZTM3dzdiam4ifQ.j0ct5K34P8PlmBbIyLBofQ';
@@ -162,12 +162,13 @@
 									<p>How It Works</p>
 								</header>
 								<ul style="list-style: none; float: center;">
-								<li><img src="./website/images/rasp.png" style="max-height: 450px;"/><br>Traffic video data is recorded by Raspberry Pi Board</li>
-								<li><img src="./website/images/down.png" style="max-height: 120px; margin: 0px; padding: 0px;"/><br>The collected data is sent to the cloud.</li>
-								<li><img src="./website/images/ai.png" style="max-height: 300px;"/><br>Tensor Flow, Keras and Google Cloud Platform are used for Data Processing.</li>
-								<li><img src="./website/images/keras.png" style="max-height: 100px;"/><br>Convolutional Neural Networks were used for object detection.</li>
+								<li><img src="./website/images/rasp.png" style="max-height: 450px;"/><br>Traffic video data is recorded by <b>Raspberry Pi Board</b>.</li>
+								<li><img src="./website/images/down.png" style="max-height: 120px; margin: 0px; padding: 0px;"/><br>The collected data is sent to <b>the cloud</b>.</li>
+								<li><img src="./website/images/ai.png" style="max-height: 300px;"/><br><b>Tensor Flow</b>, <b>Keras</b> and <b>Google Cloud Platform</b> are used for Data Processing.</li>
+								<li><img src="./website/images/keras.png" style="max-height: 100px;"/><br><b>Convolutional Neural Networks</b> were used for object detection.</li>
 								<li><img src="./website/images/gp.png" style="max-height: 200px;"/></li>
 								<li><img src="./website/images/down.png" style="max-height: 120px; margin: 0px; padding: 0px;"/><br>The data is sent to the back-end database where it is integrated with Mapbox's services.</li>
+								<li><br><a href="https://anantj24.pythonanywhere.com/" target="_">The dataset can be accessed here.</a></li>
 								<li><img src="./website/images/mbox.png" style="max-height: 80px; margin: 0px; padding: 0px;"/></li>
 								<li>The processed information is presented on this website</li>
 								</ul>
@@ -199,7 +200,7 @@
 										<li><img src="./website/images/a1.png" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>The team hard at work.</li><br><br><br>
 										<li><img src="./website/images/a2.png" style="max-height: 400px; transform:rotate(90deg);"/><br><br><br>Algorithm Development in Progress.</li>
 											</ul>
-											<p>Made at QHacks 2019 by:<br>Anant Jain<br>Andrew Farley<br>Colin Cummung<br>Jack Dementer</p>
+											<p>Made at <b>QHacks 2019</b> by<br>Anant Jain<br>Andrew Farley<br>Colin Cummung<br>Jack Dementer</p>
 									</header>
 								</section>
 					</div>
@@ -216,7 +217,7 @@
 			<script src="website/assets/js/main.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
 			<script>
-				var text = ["Change", "Society", "Fun", "The World"];
+				var text = ["Change", "Society", "Fun", "The World", "Prosperity", "Learning"];
 				var counter = 0;
 				var elem = document.getElementById("changeText");
 				var inst = setInterval(change, 1500);
