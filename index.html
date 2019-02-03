@@ -98,10 +98,10 @@
 									  map.on('load', function () {
 
 									window.setInterval(function() {
-										map.getSource('intersections').setData('http://192.168.137.1');
+										map.getSource('intersections').setData('http://anantj24.pythonanywhere.com/');
 									}, 1000);
 
-									map.addSource('intersections', {type: 'geojson', data: 'http://192.168.137.1'})
+									map.addSource('intersections', {type: 'geojson', data: 'http://anantj24.pythonanywhere.com/'})
 
 									//   var feature = features[0];
 									//   var popup = new mapboxgl.Popup({ offset: [0, 0] })
@@ -183,10 +183,10 @@
 										}, labelLayerId);
 
 										window.setInterval(function() {
-										map.getSource('cars').setData('http://192.168.137.1');
+										map.getSource('cars').setData('http://anantj24.pythonanywhere.com/');
 									}, 1000);
 
-									map.addSource('cars', {type: 'geojson', data: 'http://192.168.137.1'})
+									map.addSource('cars', {type: 'geojson', data: 'http://anantj24.pythonanywhere.com/'})
 									map.addLayer({
 												'id': 'cars',
 												'type': 'line',
