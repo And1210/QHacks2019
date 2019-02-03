@@ -136,7 +136,8 @@ class Graph():
                 elif (self.cars[i].distance <= 5):
                     # TODO make this part exponential?
                     self.cars[i].passInter()
-                    print(self.cars[i].currentNode.getCoord(), "->",self.cars[i].nextNode.getCoord())
+                    if self.cars[i].nextNode != None:
+                        print(self.cars[i].currentNode.getCoord(), "->",self.cars[i].nextNode.getCoord())
                 else:
                     self.cars[i].distance -= self.cars[i].velocity * time
                     traffic[self.cars[i].currentNode.num][self.cars[i].nextNode.num] += 1
