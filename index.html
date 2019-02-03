@@ -160,15 +160,28 @@
 													]
 												}
 										});
-										});
-										var nav = new mapboxgl.NavigationControl({
+										var nav1 = new mapboxgl.NavigationControl({
         showCompass: true,
         showZoom: false
       });
 
-map.addControl(nav);
+map.addControl(nav1);
+var nav2 = new mapboxgl.NavigationControl({
+        showCompass: false,
+        showZoom: true,
+		
+      });
+
+map.addControl(nav2("width=20pt"));
+});
+
 									</script>
-							</section>
+									<br>
+									<video width="100%" height="840" float="center" controls>
+										<source src="video.mp4" type="video/mp4">
+									  Your browser does not support the video tag.
+									  </video>
+									</section>
 							<section id="second" class="main special">
 								<header class="major">
 									<h2>ABOUT</h2>
