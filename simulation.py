@@ -4,14 +4,8 @@ import numpy as np
 from flask import Flask
 from flask_cors import CORS
 from traffic_controller import TrafficController
-import time
 
-from sklearn.cluster import KMeans
-#from ClusteringLayer import ClusteringLayer
-
-from keras.models import Sequential, load_model
-from keras.layers import Dense
-from keras.optimizers import Adagrad
+from NeuralNetworkPY import NeuralNetwork
 
 from node import setupField
 
@@ -21,36 +15,31 @@ controllers = [TrafficController([0, 2, 0, 2]) for i in range(30)]
 class Simulator:
     def __init__(self):
         self.graph = setupField()
-        self.model = Sequential()
-        self.initSupervisedModel(self.graph.edges*4, self.graph.numVertices())
-    
-    def initSupervisedModel(self, inputNum, outputNum):
-        self.model.add(Dense(64, activation='relu', input_dim=inputNum))
-        self.model.add(Dense(32, activation='sigmoid'))
-        self.model.add(Dense(32, activation='sigmoid'))
-        self.model.add(Dense(outputNum, activation='softmax'))
-        self.model.compile(loss='categorical_crossentropy', optimizer=Adagrad(0.05),
-              metrics=['accuracy'])        
-    def trainSupervisedStep(self, xData, yData):
-        return self.model.fit(xData, yData, 4)
-    def feedForwardSupervised(self, data):
-        return self.model.predict(data)
+        self.nn = NeuralNetwork(1800, [64, 32, 32], self.graph.numVertices())
         
-    def initKMeans(self, outputNum):
-        self.n_clusters = outputNum
-        self.model = KMeans(n_clusters=self.n_clusters, n_init=10, n_jobs=4)
-    def predictKMeans(self, data):
-        return self.model.fit_predict(data)
-    
-#    def clusterSampleInit(self, outputNum):
-#        self.model.add(ClusteringLayer(n_clusters=outputNum))    
-#    def clusterSampleTrain(self, data):
-#        pass
         
-    def update(self):
-        self.trainSupervisedStep()
+    def update(self, traffic, waiting):
+        lightStates = []
+        for nStr in self.graph.vertices:
+            n = self.graph.findNode(nStr)
+            lightStates.append(n.direction)
+        xData = np.append(waiting.flatten(), traffic.flatten())
+        yData = lightStates
+        
+        self.nn.train(xData, yData)
+        newLights = self.nn.feedForward(xData)
+        i = 0
+        for nStr in self.graph.vertices:
+            n = self.graph.findNode(nStr)
+            if (newLights[i] >= 0.5):
+                n.direction = 0
+                controllers[i].resetLights([0, 2, 0, 2])
+            else:
+                n.direction = 1
+                controllers[i].resetLights([2, 0, 2, 0])
+            i += 1
+            
       
-time.sleep(1.5)
 sim = Simulator()
 
 #Returns the GEOJSON for one feature
@@ -96,7 +85,8 @@ CORS(app)
 
 @app.route("/")
 def main():
-    sim.graph.update(3)
+    (traffic, waiting, loss) = sim.graph.update(3)
+    sim.update(traffic, waiting)
     data = startJSON()
     data += getLightFeatures()
     data += ', '

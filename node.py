@@ -137,7 +137,7 @@ class Graph():
                     # TODO make this part exponential?
                     self.cars[i].passInter()
                     if self.cars[i].nextNode != None:
-                        print(self.cars[i].currentNode.getCoord(), "->",self.cars[i].nextNode.getCoord())
+                        pass
                 else:
                     self.cars[i].distance -= self.cars[i].velocity * time
                     traffic[self.cars[i].currentNode.num][self.cars[i].nextNode.num] += 1
@@ -212,7 +212,6 @@ class Car():
         self.time = self.currentNode.time[self.direction]
         self.tTime += self.currentNode.time[self.direction]
         self.velocity = self.distance/self.time
-        print(self.currentNode.getCoord(), self.direction, self.nextNode.getCoord(),self.distance,self.time)
         
     def getCoords(self):
         if (self.nextNode != None):
